@@ -20,6 +20,7 @@ export interface Product {
   medium_display?: string;
   place_of_origin?: string;
   style_title?: string;
+  artist_display?: string;
 }
 
 export interface Pagination {

@@ -7,16 +7,21 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  Pressable,
   View,
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {PropsStack} from '../../../App';
 import useProducts from '../../hooks/useProducts';
+import Header from '../../components/Header';
 
 function Products(): JSX.Element {
   const {loading, products, imageBaseUrl, pagination} = useProducts();
+  const navigation = useNavigation<PropsStack>();
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Text>Postcards</Text>
+      <Header navigation={navigation} backButton={false} />
 
       {loading ? (
         <View style={styles.container}>
@@ -25,23 +30,40 @@ function Products(): JSX.Element {
       ) : (
         <ScrollView>
           <View style={styles.productsContainer}>
-            {products.map(product => (
-              <View style={styles.productsList} key={product.id}>
-                <Image
-                  style={styles.image}
-                  source={{
-                    uri: `${imageBaseUrl}/${product.image_id}/full/843,/0/default.jpg`,
-                  }}
-                />
-                <View style={styles.textContainer}>
-                  <Text style={styles.titleText}>{product.title}</Text>
-                  <Text style={styles.text}>{product.artist_title}</Text>
-                </View>
-                <View style={styles.button}>
-                  <Button title={'Comprar'} onPress={() => {}} />
-                </View>
-              </View>
-            ))}
+            {products.map(product => {
+              const image = `${imageBaseUrl}/${product.image_id}/full/843,/0/default.jpg`;
+
+              return (
+                <Pressable
+                  style={styles.productsList}
+                  key={product.id}
+                  onPress={() => {
+                    navigation.navigate('ProductDetail', {
+                      product,
+                      image,
+                    });
+                  }}>
+                  <Image
+                    style={styles.image}
+                    source={{
+                      uri: `${imageBaseUrl}/${product.image_id}/full/843,/0/default.jpg`,
+                    }}
+                  />
+                  <View style={styles.productTextContainer}>
+                    <Text style={styles.titleText}>{product.title}</Text>
+                    <Text style={styles.text}>{product.artist_title}</Text>
+                  </View>
+                  <View style={styles.button}>
+                    <Text style={styles.priceText}>R$15,00</Text>
+                    <Button
+                      title={'Comprar'}
+                      color="black"
+                      onPress={() => {}}
+                    />
+                  </View>
+                </Pressable>
+              );
+            })}
           </View>
         </ScrollView>
       )}
@@ -63,7 +85,7 @@ const styles = StyleSheet.create({
     width: '50%',
     padding: 15,
   },
-  textContainer: {
+  productTextContainer: {
     marginBottom: 8,
   },
   titleText: {
@@ -74,6 +96,13 @@ const styles = StyleSheet.create({
   text: {
     fontStyle: 'italic',
     color: 'black',
+  },
+  priceText: {
+    color: 'black',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 18,
+    marginBottom: 5,
   },
   image: {
     height: 200,

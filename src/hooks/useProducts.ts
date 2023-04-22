@@ -9,7 +9,7 @@ export default function useProducts() {
   const [pagination, setPagination] = useState<Pagination>();
   const baseUrl = 'https://api.artic.edu/api/v1/artworks';
   const fields =
-    'id,title,date_display,place_of_origin,dimensions,medium_display,artwork_type_title,artist_title,style_title,image_id';
+    'id,title,date_display,place_of_origin,dimensions,medium_display,artwork_type_title,artist_title,style_title,image_id,artist_display';
 
   const fetchProducts = () => {
     axios.get<ApiResponse>(`${baseUrl}?fields=${fields}`).then(response => {
