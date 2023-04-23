@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   ActivityIndicator,
-  Button,
   Image,
   SafeAreaView,
   ScrollView,
@@ -14,14 +13,29 @@ import {useNavigation} from '@react-navigation/native';
 import {PropsStack} from '../../../App';
 import useProducts from '../../hooks/useProducts';
 import Header from '../../components/Header';
+import {useAppDispatch, useAppSelector} from '../../store/hooks';
+import {
+  addProduct,
+} from '../../store/shoppingCart/shoppingCartSlice';
+import InputSpinner from '../../components/InputSpinner';
 
 function Products(): JSX.Element {
-  const {loading, products, imageBaseUrl, pagination} = useProducts();
+  const {loading, products, pagination} = useProducts();
   const navigation = useNavigation<PropsStack>();
+  const dispatch = useAppDispatch();
+
+  const shoppingCartProducts = useAppSelector(
+    state => state.shoppingCart.products,
+  );
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Header navigation={navigation} backButton={false} />
+      <Header
+        navigation={navigation}
+        backButton={false}
+        closeButton={false}
+        shoppingCartButton={true}
+      />
 
       {loading ? (
         <View style={styles.container}>
@@ -31,8 +45,9 @@ function Products(): JSX.Element {
         <ScrollView>
           <View style={styles.productsContainer}>
             {products.map(product => {
-              const image = `${imageBaseUrl}/${product.image_id}/full/843,/0/default.jpg`;
-
+              const productQuantity = shoppingCartProducts.filter(
+                item => item.product.id === product.id,
+              );
               return (
                 <Pressable
                   style={styles.productsList}
@@ -40,26 +55,35 @@ function Products(): JSX.Element {
                   onPress={() => {
                     navigation.navigate('ProductDetail', {
                       product,
-                      image,
                     });
                   }}>
                   <Image
                     style={styles.image}
                     source={{
-                      uri: `${imageBaseUrl}/${product.image_id}/full/843,/0/default.jpg`,
+                      uri: product.image,
                     }}
                   />
                   <View style={styles.productTextContainer}>
                     <Text style={styles.titleText}>{product.title}</Text>
                     <Text style={styles.text}>{product.artist_title}</Text>
                   </View>
-                  <View style={styles.button}>
+                  <View style={styles.shoppingContainer}>
                     <Text style={styles.priceText}>R$15,00</Text>
-                    <Button
-                      title={'Comprar'}
-                      color="black"
-                      onPress={() => {}}
-                    />
+                    <View>
+                      {productQuantity.length ? (
+                        <InputSpinner
+                          product={product}
+                          icon={{size: 25, color: 'white'}}
+                          quantity={productQuantity[0].quantity}
+                        />
+                      ) : (
+                        <Pressable
+                          style={styles.button}
+                          onPress={() => dispatch(addProduct(product))}>
+                          <Text style={styles.buttonText}>Comprar</Text>
+                        </Pressable>
+                      )}
+                    </View>
                   </View>
                 </Pressable>
               );
@@ -107,9 +131,20 @@ const styles = StyleSheet.create({
   image: {
     height: 200,
   },
-  button: {
+  shoppingContainer: {
     flex: 1,
     justifyContent: 'flex-end',
+  },
+  button: {
+    backgroundColor: 'black',
+    height: 40,
+    justifyContent: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 18,
   },
 });
 

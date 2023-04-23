@@ -2,13 +2,28 @@ import React from 'react';
 import {Pressable} from 'react-native';
 import {StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {useAppSelector} from '../../store/hooks';
 
-type Props = {
+interface Props {
   navigation: any;
   backButton: boolean;
-};
+  closeButton: boolean;
+  shoppingCartButton: boolean;
+}
 
-function Header({navigation, backButton}: Props): JSX.Element {
+function Header({
+  navigation,
+  backButton,
+  closeButton,
+  shoppingCartButton,
+}: Props): JSX.Element {
+  const products = useAppSelector(state => state.shoppingCart.products);
+
+  const initialQuantity = 0;
+  const quantity =
+    products.length &&
+    products.reduce((acc, curr) => acc + curr.quantity, initialQuantity);
+
   return (
     <View style={styles.container}>
       {backButton && (
@@ -20,10 +35,25 @@ function Header({navigation, backButton}: Props): JSX.Element {
         </Pressable>
       )}
       <Text style={styles.text}>Postcards</Text>
-      <View style={styles.shoppingCartContainer}>
-        <Icon name="shopping-cart" size={30} color={'white'} />
-        <Text style={styles.shoppingCartText}>1</Text>
-      </View>
+      {shoppingCartButton && (
+        <Pressable
+          style={styles.shoppingCartContainer}
+          onPress={() => navigation.navigate('ShoppingCart')}>
+          <Icon name="shopping-cart" size={30} color={'white'} />
+          {quantity > 0 && (
+            <Text style={styles.shoppingCartText}>{quantity}</Text>
+          )}
+        </Pressable>
+      )}
+      {closeButton && (
+        <Pressable
+          style={styles.shoppingCartContainer}
+          onPress={() => {
+            navigation.goBack();
+          }}>
+          <Icon name="close" size={30} color={'white'} />
+        </Pressable>
+      )}
     </View>
   );
 }

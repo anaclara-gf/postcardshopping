@@ -21,6 +21,7 @@ export interface Product {
   place_of_origin?: string;
   style_title?: string;
   artist_display?: string;
+  image?: string;
 }
 
 export interface Pagination {
