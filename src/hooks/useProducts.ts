@@ -4,6 +4,7 @@ import {ApiResponse, Pagination, Product} from '../types/Product';
 
 export default function useProducts() {
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<boolean>(false)
   const [products, setProducts] = useState<Product[]>([]);
   const [pagination, setPagination] = useState<Pagination>();
   const baseUrl = 'https://api.artic.edu/api/v1/artworks';
@@ -14,6 +15,7 @@ export default function useProducts() {
     axios
       .get<ApiResponse>(`${baseUrl}?fields=${fields}`)
       .then(response => {
+        setError(false);
         const productsWithImages = response.data.data.map(product => {
           return {
             ...product,
@@ -24,8 +26,8 @@ export default function useProducts() {
         setPagination(response.data.pagination);
         setLoading(false);
       })
-      .catch(error => {
-        console.log(error);
+      .catch(() => {
+        setError(true);
       });
   };
 
@@ -33,5 +35,5 @@ export default function useProducts() {
     fetchProducts();
   }, []);
 
-  return {loading, products, pagination};
+  return {loading, products, pagination, error, fetchProducts};
 }

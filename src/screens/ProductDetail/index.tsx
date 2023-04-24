@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,14 +9,13 @@ import {
 } from 'react-native';
 import {useRoute, useNavigation} from '@react-navigation/native';
 import {Overlay} from '@rneui/base';
-import {Props} from '../../../App';
-import {PropsStack} from '../../../App';
 import {useAppDispatch, useAppSelector} from '../../store/hooks';
 import {
   addProduct,
 } from '../../store/shoppingCart/shoppingCartSlice';
 import Header from '../../components/Header';
 import InputSpinner from '../../components/InputSpinner';
+import { Props, PropsStack } from '../../router';
 
 export type ProductDetailScreenRouteProp = Props['route'];
 
@@ -34,8 +33,6 @@ function ProductDetail(): JSX.Element {
   const productQuantity = shoppingCartProducts.filter(
     item => item.product.id === product.id,
   );
-
-  useEffect(() => console.log(productQuantity), []);
 
   const navigation = useNavigation<PropsStack>();
   const [visible, setVisible] = useState(false);

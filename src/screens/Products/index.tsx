@@ -10,17 +10,15 @@ import {
   View,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {PropsStack} from '../../../App';
 import useProducts from '../../hooks/useProducts';
 import Header from '../../components/Header';
 import {useAppDispatch, useAppSelector} from '../../store/hooks';
-import {
-  addProduct,
-} from '../../store/shoppingCart/shoppingCartSlice';
+import {addProduct} from '../../store/shoppingCart/shoppingCartSlice';
 import InputSpinner from '../../components/InputSpinner';
+import { PropsStack } from '../../router';
 
 function Products(): JSX.Element {
-  const {loading, products, pagination} = useProducts();
+  const {loading, products, error, fetchProducts, pagination} = useProducts();
   const navigation = useNavigation<PropsStack>();
   const dispatch = useAppDispatch();
 
@@ -40,6 +38,15 @@ function Products(): JSX.Element {
       {loading ? (
         <View style={styles.container}>
           <ActivityIndicator color={'black'} size="large" />
+        </View>
+      ) : error ? (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>
+            Ops! Tivemos um erro enquanto tentávamos carregar os produtos
+          </Text>
+          <Pressable onPress={fetchProducts} style={styles.tryAgainButton}>
+            <Text style={styles.tryAgainButtonText}>Tentar Novamente</Text>
+          </Pressable>
         </View>
       ) : (
         <ScrollView>
@@ -100,6 +107,27 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     transform: [{scaleX: 2}, {scaleY: 2}],
+  },
+  errorContainer: {
+    flex: 1,
+    paddingHorizontal: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  errorText: {
+    fontSize: 26,
+    color: 'black',
+    textAlign: 'center',
+  },
+  tryAgainButton: {
+    marginTop: 20,
+    backgroundColor: 'black',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  tryAgainButtonText: {
+    fontSize: 22,
+    color: 'white',
   },
   productsContainer: {
     flexDirection: 'row',

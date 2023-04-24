@@ -9,13 +9,12 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../components/Header';
-import {PropsStack} from '../../../App';
-import {useAppDispatch, useAppSelector} from '../../store/hooks';
+import {useAppSelector} from '../../store/hooks';
 import InputSpinner from '../../components/InputSpinner';
+import { PropsStack } from '../../router';
 
 function ShoppingCart(): JSX.Element {
   const navigation = useNavigation<PropsStack>();
-  const dispatch = useAppDispatch();
 
   const products = useAppSelector(state => state.shoppingCart.products);
   const totalProducts = products.reduce((acc, curr) => acc + curr.quantity, 0);
