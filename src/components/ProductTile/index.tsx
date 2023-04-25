@@ -24,6 +24,7 @@ function ProductTile({product}: Props): JSX.Element {
 
   return (
     <Pressable
+      testID="productTileTestId"
       style={styles.productTileContainer}
       onPress={() => {
         navigation.navigate('ProductDetail', {
