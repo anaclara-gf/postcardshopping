@@ -15,7 +15,6 @@ export default function useProducts() {
     axios
       .get<ApiResponse>(`${baseUrl}?fields=${fields}`)
       .then(response => {
-        console.log(response.data.data)
         setError(false);
         const productsWithImages = response.data.data.map(product => {
           return {

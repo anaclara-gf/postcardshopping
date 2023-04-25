@@ -24,7 +24,7 @@ function Products(): JSX.Element {
       />
 
       {loading ? (
-        <View style={styles.container}>
+        <View testID='loadingTestId' style={styles.container}>
           <ActivityIndicator color={'black'} size="large" />
         </View>
       ) : error ? (

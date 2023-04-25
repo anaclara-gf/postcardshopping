@@ -64,7 +64,7 @@ describe('InputSpinner tests', () => {
     expect(getByTestId('trashIconButton')).toBeTruthy;
   });
 
-  it('should calls addProduct when click on plus button', () => {
+  it('should call addProduct when click on plus button', () => {
     const {getByTestId} = renderWithProviders(
       <InputSpinner
         product={product1}
@@ -84,7 +84,7 @@ describe('InputSpinner tests', () => {
     });
   });
 
-  it('should calls removeProduct when click on minus/trash button', () => {
+  it('should call removeProduct when click on minus/trash button', () => {
     const {getByTestId} = renderWithProviders(
       <InputSpinner
         product={product1}

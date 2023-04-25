@@ -1,6 +1,7 @@
 import {fireEvent} from '@testing-library/react-native';
-import ProductTile from '..';
 import {renderWithProviders} from '../../../utils/test-utils';
+import ProductDetail from '..';
+import React from 'react';
 
 const product1 = {
   id: 1,
@@ -32,17 +33,29 @@ const mockedStoreState = {
   },
 };
 
-const mockedNavigate = jest.fn();
-
 jest.mock('@react-navigation/native', () => {
   const actualNav = jest.requireActual('@react-navigation/native');
   return {
     ...actualNav,
-    useNavigation: () => ({
-      navigate: mockedNavigate,
-    }),
+    useNavigation: () => {},
+    useRoute: jest
+      .fn()
+      .mockReturnValueOnce({
+        params: {
+          product: product1,
+        },
+      })
+      .mockReturnValue({
+        params: {
+          product: product2,
+        },
+      }),
   };
 });
+
+jest.mock('@rneui/base', () => ({
+  Overlay: jest.fn(),
+}));
 
 const mockDispatch = jest.fn();
 
@@ -51,50 +64,25 @@ jest.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,
 }));
 
-describe('ProductTile tests', () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
+describe('ProductDetail tests', () => {
   it('should render correctly', () => {
-    renderWithProviders(<ProductTile product={product1} />, {
+    renderWithProviders(<ProductDetail />, {
       preloadedState: mockedStoreState,
     });
   });
 
-  it('should call navigate to "ProductDetail" when pressing tile', () => {
-    const {getByTestId} = renderWithProviders(
-      <ProductTile product={product1} />,
-      {
-        preloadedState: mockedStoreState,
-      },
-    );
-
-    fireEvent.press(getByTestId('productTileTestId'));
-    expect(mockedNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedNavigate).toHaveBeenCalledWith('ProductDetail', {
-      product: product1,
-    });
-  });
-
   it('should show button Comprar when there is no product on shoppingCart', () => {
-    const {getByText} = renderWithProviders(
-      <ProductTile product={product2} />,
-      {
-        preloadedState: mockedStoreState,
-      },
-    );
+    const {getByText} = renderWithProviders(<ProductDetail />, {
+      preloadedState: mockedStoreState,
+    });
 
     expect(getByText('Comprar')).toBeTruthy();
   });
 
   it('should call addProduct when click on Comprar button', () => {
-    const {getByText} = renderWithProviders(
-      <ProductTile product={product2} />,
-      {
-        preloadedState: mockedStoreState,
-      },
-    );
+    const {getByText} = renderWithProviders(<ProductDetail />, {
+      preloadedState: mockedStoreState,
+    });
 
     fireEvent.press(getByText('Comprar'));
     expect(mockDispatch).toBeCalledTimes(1);
@@ -102,5 +90,13 @@ describe('ProductTile tests', () => {
       payload: product2,
       type: 'shoppingCart/addProduct',
     });
+  });
+
+  it('should toggle overlay image visibility when click on image', () => {
+    const {getByTestId} = renderWithProviders(<ProductDetail />, {
+      preloadedState: mockedStoreState,
+    });
+    
+    fireEvent.press(getByTestId('imageTestId'));
   });
 });

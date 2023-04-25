@@ -7,15 +7,13 @@ import {
   Pressable,
   ScrollView,
 } from 'react-native';
-import {useRoute, useNavigation} from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
 import {Overlay} from '@rneui/base';
 import {useAppDispatch, useAppSelector} from '../../store/hooks';
-import {
-  addProduct,
-} from '../../store/shoppingCart/shoppingCartSlice';
+import {addProduct} from '../../store/shoppingCart/shoppingCartSlice';
 import Header from '../../components/Header';
 import InputSpinner from '../../components/InputSpinner';
-import { Props, PropsStack } from '../../router';
+import {Props} from '../../router';
 
 export type ProductDetailScreenRouteProp = Props['route'];
 
@@ -34,7 +32,6 @@ function ProductDetail(): JSX.Element {
     item => item.product.id === product.id,
   );
 
-  const navigation = useNavigation<PropsStack>();
   const [visible, setVisible] = useState(false);
 
   const toggleOverlay = () => {
@@ -43,13 +40,9 @@ function ProductDetail(): JSX.Element {
 
   return (
     <>
-      <Header
-        backButton={true}
-        closeButton={false}
-        shoppingCartButton={true}
-      />
+      <Header backButton={true} closeButton={false} shoppingCartButton={true} />
       <ScrollView contentContainerStyle={styles.container}>
-        <Pressable onPress={toggleOverlay}>
+        <Pressable testID="imageTestId" onPress={toggleOverlay}>
           <Image
             style={styles.image}
             source={{
@@ -82,6 +75,7 @@ function ProductDetail(): JSX.Element {
       </ScrollView>
       <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
         <Image
+          testID="overlayImageTestId"
           style={styles.fullImage}
           resizeMode="contain"
           source={{

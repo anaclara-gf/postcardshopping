@@ -36,9 +36,10 @@ function ShoppingCart(): JSX.Element {
                 {products.map(product => {
                   const price = `R$${15 * product.quantity},00`;
                   return (
-                    <View>
+                    <View key={product.product.id}>
                       <Pressable
                         key={product.product.id}
+                        testID='productTileTestId'
                         style={styles.product}
                         onPress={() => {
                           navigation.navigate('ProductDetail', {

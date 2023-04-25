@@ -1,5 +1,5 @@
-import {store} from '../..';
-import {addProduct, removeProduct} from '../shoppingCartSlice';
+import {store} from '..';
+import {addProduct, removeProduct} from '../shoppingCart/shoppingCartSlice';
 
 const product1 = {
   id: 1,
