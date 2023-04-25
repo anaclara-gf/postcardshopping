@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -25,11 +25,10 @@ function Products(): JSX.Element {
   const shoppingCartProducts = useAppSelector(
     state => state.shoppingCart.products,
   );
-
+  
   return (
     <SafeAreaView style={{flex: 1}}>
       <Header
-        navigation={navigation}
         backButton={false}
         closeButton={false}
         shoppingCartButton={true}

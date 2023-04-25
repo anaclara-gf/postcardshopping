@@ -1,7 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import {Product} from '../../types/Product';
-import {RootState} from '..';
 
 interface ShoppingCartProduct {
   product: Product;
@@ -47,7 +46,5 @@ export const shoppingCartSlice = createSlice({
 });
 
 export const {addProduct, removeProduct} = shoppingCartSlice.actions;
-
-export const selectProducts = (state: RootState) => state.shoppingCart.products;
 
 export default shoppingCartSlice.reducer;

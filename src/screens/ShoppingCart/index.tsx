@@ -23,7 +23,6 @@ function ShoppingCart(): JSX.Element {
   return (
     <View style={styles.container}>
       <Header
-        navigation={navigation}
         backButton={false}
         closeButton={true}
         shoppingCartButton={false}

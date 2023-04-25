@@ -26,9 +26,19 @@ function InputSpinner({product, icon, quantity}: Props) {
         style={styles.iconContainer}
         onPress={() => dispatch(removeProduct(product))}>
         {quantity > 1 ? (
-          <Icon name="minus" size={icon.size} color={icon.color} />
+          <Icon
+            testID="minusIconButton"
+            name="minus"
+            size={icon.size}
+            color={icon.color}
+          />
         ) : (
-          <Icon name="trash" size={icon.size} color={icon.color} />
+          <Icon
+            testID="trashIconButton"
+            name="trash"
+            size={icon.size}
+            color={icon.color}
+          />
         )}
       </Pressable>
       <View style={styles.textContainer}>
@@ -37,7 +47,12 @@ function InputSpinner({product, icon, quantity}: Props) {
       <Pressable
         style={styles.iconContainer}
         onPress={() => dispatch(addProduct(product))}>
-        <Icon name="plus" size={icon.size} color={icon.color} />
+        <Icon
+          testID="plusIconButton"
+          name="plus"
+          size={icon.size}
+          color={icon.color}
+        />
       </Pressable>
     </View>
   );

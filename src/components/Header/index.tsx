@@ -3,16 +3,16 @@ import {Pressable} from 'react-native';
 import {StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useAppSelector} from '../../store/hooks';
+import {useNavigation} from '@react-navigation/native';
+import { PropsStack } from '../../router';
 
 interface Props {
-  navigation: any;
   backButton: boolean;
   closeButton: boolean;
   shoppingCartButton: boolean;
 }
 
 function Header({
-  navigation,
   backButton,
   closeButton,
   shoppingCartButton,
@@ -24,10 +24,13 @@ function Header({
     products.length &&
     products.reduce((acc, curr) => acc + curr.quantity, initialQuantity);
 
+  const navigation = useNavigation<PropsStack>();
+
   return (
     <View style={styles.container}>
       {backButton && (
         <Pressable
+          testID="arrowLeftIconButton"
           onPress={() => {
             navigation.goBack();
           }}>
@@ -37,16 +40,22 @@ function Header({
       <Text style={styles.text}>Postcards</Text>
       {shoppingCartButton && (
         <Pressable
+          testID="shoppingCartIconButton"
           style={styles.shoppingCartContainer}
           onPress={() => navigation.navigate('ShoppingCart')}>
           <Icon name="shopping-cart" size={30} color={'white'} />
           {quantity > 0 && (
-            <Text style={styles.shoppingCartText}>{quantity}</Text>
+            <Text
+              testID="quantityOfProductsText"
+              style={styles.shoppingCartText}>
+              {quantity}
+            </Text>
           )}
         </Pressable>
       )}
       {closeButton && (
         <Pressable
+          testID="closeIconButton"
           style={styles.shoppingCartContainer}
           onPress={() => {
             navigation.goBack();

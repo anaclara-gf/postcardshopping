@@ -28,6 +28,7 @@ export default function useProducts() {
       })
       .catch(() => {
         setError(true);
+        setLoading(false);
       });
   };
 

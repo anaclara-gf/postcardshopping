@@ -44,7 +44,6 @@ function ProductDetail(): JSX.Element {
   return (
     <>
       <Header
-        navigation={navigation}
         backButton={true}
         closeButton={false}
         shoppingCartButton={true}
