@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '..';
-import {renderWithProviders} from '../../../utils/test-utils';
-import { fireEvent } from '@testing-library/react-native';
+import {renderWithProviders} from '../../../utils/tests/test-utils';
+import {fireEvent} from '@testing-library/react-native';
 
 const mockedStoreState = {
   shoppingCart: {

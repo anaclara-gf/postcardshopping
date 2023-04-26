@@ -1,6 +1,6 @@
 import {fireEvent} from '@testing-library/react-native';
 import ProductTile from '..';
-import {renderWithProviders} from '../../../utils/test-utils';
+import {renderWithProviders} from '../../../utils/tests/test-utils';
 
 const product1 = {
   id: 1,

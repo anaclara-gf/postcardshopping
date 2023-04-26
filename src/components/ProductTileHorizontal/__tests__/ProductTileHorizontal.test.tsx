@@ -1,5 +1,5 @@
 import {fireEvent} from '@testing-library/react-native';
-import {renderWithProviders} from '../../../utils/test-utils';
+import {renderWithProviders} from '../../../utils/tests/test-utils';
 import React from 'react';
 import ProductTileHorizontal from '..';
 

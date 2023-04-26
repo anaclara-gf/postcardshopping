@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {useEffect, useState} from 'react';
-import {ApiResponse, Pagination, Product} from '../types/Product';
+import {ApiResponse, Pagination, Product} from '../utils/types/Product';
 
 export default function useProducts() {
   const [loading, setLoading] = useState(true);
@@ -13,7 +13,7 @@ export default function useProducts() {
 
   const fetchProducts = () => {
     axios
-      .get<ApiResponse>(`${baseUrl}?fields=${fields}&limit=40`)
+      .get<ApiResponse>(`${baseUrl}?fields=${fields}&limit=90`)
       .then(response => {
         setError(false);
         const productsWithImages = response.data.data

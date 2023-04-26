@@ -6,7 +6,7 @@ import {
   addProduct,
   removeProduct,
 } from '../../store/shoppingCart/shoppingCartSlice';
-import {Product} from '../../types/Product';
+import {Product} from '../../utils/types/Product';
 
 interface Props {
   product: Product;

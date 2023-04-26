@@ -1,5 +1,5 @@
 import {fireEvent} from '@testing-library/react-native';
-import {renderWithProviders} from '../../../utils/test-utils';
+import {renderWithProviders} from '../../../utils/tests/test-utils';
 import ProductDetail from '..';
 import React from 'react';
 
@@ -96,7 +96,7 @@ describe('ProductDetail tests', () => {
     const {getByTestId} = renderWithProviders(<ProductDetail />, {
       preloadedState: mockedStoreState,
     });
-    
+
     fireEvent.press(getByTestId('imageTestId'));
   });
 });

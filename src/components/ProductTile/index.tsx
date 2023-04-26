@@ -1,5 +1,5 @@
 import {Pressable, StyleSheet, Image, View, Text} from 'react-native';
-import {Product} from '../../types/Product';
+import {Product} from '../../utils/types/Product';
 import {useNavigation} from '@react-navigation/native';
 import {PropsStack} from '../../router';
 import InputSpinner from '../InputSpinner';

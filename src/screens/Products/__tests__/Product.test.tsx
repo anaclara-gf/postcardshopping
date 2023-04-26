@@ -3,7 +3,7 @@ import {
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react-native';
-import {renderWithProviders} from '../../../utils/test-utils';
+import {renderWithProviders} from '../../../utils/tests/test-utils';
 import React from 'react';
 import axios from 'axios';
 import Products from '..';
@@ -89,6 +89,5 @@ describe('ShoppingCart tests', () => {
         ),
       ).toBeTruthy();
     });
-
   });
 });

@@ -55,9 +55,9 @@ Foi utilizado o Redux em vez da Context API para permitir uma maior escalabilida
 ## Testes
 
 ![badge-branches](./coverage/badge-branches.svg)
-![badge-branches](./coverage/badge-functions.svg)
-![badge-branches](./coverage/badge-lines.svg)
-![badge-branches](./coverage/badge-statements.svg)
+![badge-functions](./coverage/badge-functions.svg)
+![badge-lines](./coverage/badge-lines.svg)
+![badge-statements](./coverage/badge-statements.svg)
 
 Foram feitos testes de componentes com Jest (configurado junto com a inicialização do projeto) e [Testing Library](https://testing-library.com/). Para executar os testes, basta executar o comando `npm test`.
 
@@ -66,4 +66,4 @@ Foram feitos testes de componentes com Jest (configurado junto com a inicializa�
 O projeto foi iniciado com React Native CLI para que no futuro seja mais fácil integrar módulos nativos Android e iOS. O objetivo é fornecer uma base sólida e escalável para um aplicativo de venda de postcards que pode ser facilmente modificado e expandido.
 
 <p align="center">App preview</p>
-<div align="center"><img src="./docs/video.gif" width="200"></div>
+<div align="center"><img src="./docs/video.gif" width="300"></div>

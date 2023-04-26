@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
-import {Product} from '../../types/Product';
+import {Product} from '../../utils/types/Product';
 
 interface ShoppingCartProduct {
   product: Product;
