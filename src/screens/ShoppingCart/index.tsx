@@ -1,24 +1,20 @@
-import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Image,
-  Text,
-  ScrollView,
-  Pressable,
-} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import React, {useState} from 'react';
+import {StyleSheet, View, Text, Pressable, FlatList} from 'react-native';
 import Header from '../../components/Header';
 import {useAppSelector} from '../../store/hooks';
-import InputSpinner from '../../components/InputSpinner';
-import { PropsStack } from '../../router';
+import DeleteDialog from '../../components/Dialog';
+import ProductTileHorizontal from '../../components/ProductTileHorizontal';
 
 function ShoppingCart(): JSX.Element {
-  const navigation = useNavigation<PropsStack>();
+  const [dialog, setDialog] = useState<boolean>(false);
 
   const products = useAppSelector(state => state.shoppingCart.products);
   const totalProducts = products.reduce((acc, curr) => acc + curr.quantity, 0);
   const totalPrice = `R$${15 * totalProducts},00`;
+
+  const toggleDialog = () => {
+    setDialog(!dialog);
+  };
 
   return (
     <View style={styles.container}>
@@ -28,61 +24,37 @@ function ShoppingCart(): JSX.Element {
         shoppingCartButton={false}
       />
       <View style={styles.productsContainer}>
-        <Text style={styles.pageTitle}>Seu carrinho</Text>
+        <Text style={styles.pageTitle}>
+          Seu carrinho - {products.length} item(s)
+        </Text>
+
         {products.length ? (
-          <View style={styles.contentContainer}>
-            <ScrollView style={styles.productsListContainer}>
-              <View style={styles.productsList}>
-                {products.map(product => {
-                  const price = `R$${15 * product.quantity},00`;
-                  return (
-                    <View key={product.product.id}>
-                      <Pressable
-                        key={product.product.id}
-                        testID='productTileTestId'
-                        style={styles.product}
-                        onPress={() => {
-                          navigation.navigate('ProductDetail', {
-                            product: product.product,
-                          });
-                        }}>
-                        <Image
-                          style={styles.image}
-                          source={{
-                            uri: product.product.image,
-                          }}
-                        />
-                        <View style={styles.textContainer}>
-                          <Text style={styles.title}>
-                            {product.product.title}
-                          </Text>
-                          <Text style={styles.subtitle}>
-                            {product.product.artist_title}
-                          </Text>
-                          <Text style={styles.title}>{price}</Text>
-                        </View>
-                        <InputSpinner
-                          product={product.product}
-                          icon={{size: 20, color: 'black'}}
-                          quantity={product.quantity}
-                        />
-                      </Pressable>
-                    </View>
-                  );
-                })}
+          <>
+            <Pressable onPress={toggleDialog} style={styles.cleanCartButton}>
+              <Text style={styles.cleanCartText}>Limpar carrinho</Text>
+            </Pressable>
+            <View style={styles.contentContainer}>
+              <FlatList
+                initialNumToRender={10}
+                style={styles.productsList}
+                data={products}
+                renderItem={({item}) => (
+                  <ProductTileHorizontal key={item.product.id} product={item} />
+                )}
+              />
+              <View style={styles.totalContainer}>
+                <Text style={styles.total}>TOTAL</Text>
+                <Text style={styles.total}>{totalPrice}</Text>
               </View>
-            </ScrollView>
-            <View style={styles.totalContainer}>
-              <Text style={styles.total}>TOTAL</Text>
-              <Text style={styles.total}>{totalPrice}</Text>
             </View>
-          </View>
+          </>
         ) : (
           <Text style={styles.emptyListText}>
             Não há produtos em seu carrinho ainda!
           </Text>
         )}
       </View>
+      <DeleteDialog toggleDialog={toggleDialog} dialog={dialog} />
     </View>
   );
 }
@@ -95,13 +67,6 @@ const styles = StyleSheet.create({
     padding: 15,
     flex: 1,
   },
-  product: {
-    flexDirection: 'row',
-    paddingBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: 'lightgrey',
-    marginBottom: 10,
-  },
   pageTitle: {
     color: 'black',
     fontWeight: 'bold',
@@ -109,27 +74,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 15,
   },
-  image: {
-    height: 75,
-    width: 75,
-    marginRight: 5,
+  cleanCartButton: {
+    alignSelf: 'flex-end',
+    marginBottom: 10,
   },
-  title: {
-    color: 'black',
-    fontWeight: 'bold',
-  },
-  subtitle: {
-    color: 'black',
-  },
-  textContainer: {
-    flex: 2,
+  cleanCartText: {
+    color: 'red',
   },
   emptyListText: {
     textAlign: 'center',
     fontSize: 16,
-  },
-  productsListContainer: {
-    flex: 1,
   },
   productsList: {flex: 1},
   contentContainer: {flex: 1},

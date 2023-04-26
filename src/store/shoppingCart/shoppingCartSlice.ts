@@ -38,13 +38,17 @@ export const shoppingCartSlice = createSlice({
           product.quantity -= 1;
         } else {
           const index = state.products.indexOf(product);
-          state.products.splice(index, 1); 
+          state.products.splice(index, 1);
         }
       }
+    },
+    removeAllProducts: () => {
+      return initialState;
     },
   },
 });
 
-export const {addProduct, removeProduct} = shoppingCartSlice.actions;
+export const {addProduct, removeProduct, removeAllProducts} =
+  shoppingCartSlice.actions;
 
 export default shoppingCartSlice.reducer;
