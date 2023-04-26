@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {StyleSheet, View, Text, Pressable, FlatList} from 'react-native';
 import Header from '../../components/Header';
 import {useAppSelector} from '../../store/hooks';
-import DeleteDialog from '../../components/Dialog';
+import DeleteDialog from '../../components/DeleteDialog';
 import ProductTileHorizontal from '../../components/ProductTileHorizontal';
 
 function ShoppingCart(): JSX.Element {

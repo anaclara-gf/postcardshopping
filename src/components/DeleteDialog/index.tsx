@@ -18,6 +18,7 @@ function DeleteDialog({toggleDialog, dialog}: Props): JSX.Element {
       <Dialog.Actions>
         <View style={styles.buttonsContainer}>
           <Dialog.Button
+            testID="cancelButtonTestId"
             title="Cancelar"
             titleProps={{style: styles.cancelButton}}
             onPress={toggleDialog}

@@ -42,7 +42,7 @@ As seguintes dependências externas foram utilizadas no projeto:
 
 [React Navigation](https://reactnavigation.org/) - para organizar a navegação entre telas.
 
-[React Native Elements](https://reactnativeelements.com/) - para o componente de Overlay.
+[React Native Elements](https://reactnativeelements.com/) - para o componente de Overlay e Dialog.
 
 [React Native Vector Icons](https://www.npmjs.com/package/react-native-vector-icons) - para exibição de ícones.
 
@@ -65,5 +65,5 @@ Foram feitos testes de componentes com Jest (configurado junto com a inicializa�
 
 O projeto foi iniciado com React Native CLI para que no futuro seja mais fácil integrar módulos nativos Android e iOS. O objetivo é fornecer uma base sólida e escalável para um aplicativo de venda de postcards que pode ser facilmente modificado e expandido.
 
-<div align="center"><img src="./docs/video.gif" width="200"></div>
 <p align="center">App preview</p>
+<div align="center"><img src="./docs/video.gif" width="200"></div>

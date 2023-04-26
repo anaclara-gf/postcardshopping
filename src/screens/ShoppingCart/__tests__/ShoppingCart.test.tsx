@@ -44,6 +44,10 @@ jest.mock('@react-navigation/native', () => {
   };
 });
 
+jest.mock('@rneui/themed', () => ({
+  Dialog: jest.fn(),
+}));
+
 describe('ShoppingCart tests', () => {
   it('should render correctly', () => {
     renderWithProviders(<ShoppingCart />, {
@@ -51,16 +55,12 @@ describe('ShoppingCart tests', () => {
     });
   });
 
-  it('should call navigate to "ProductDetail" when pressing tile', () => {
-    const {getByTestId} = renderWithProviders(<ShoppingCart />, {
+  it('should open Dialog when click on Clean List', () => {
+    const {getByText} = renderWithProviders(<ShoppingCart />, {
       preloadedState: mockedStoreState,
     });
 
-    fireEvent.press(getByTestId('productTileTestId'));
-    expect(mockedNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedNavigate).toHaveBeenCalledWith('ProductDetail', {
-      product: product1,
-    });
+    fireEvent.press(getByText('Limpar carrinho'));
   });
 
   it('should render empty cart message if cart is empty', () => {

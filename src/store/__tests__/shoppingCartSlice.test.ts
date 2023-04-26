@@ -1,5 +1,9 @@
 import {store} from '..';
-import {addProduct, removeProduct} from '../shoppingCart/shoppingCartSlice';
+import {
+  addProduct,
+  removeAllProducts,
+  removeProduct,
+} from '../shoppingCart/shoppingCartSlice';
 
 const product1 = {
   id: 1,
@@ -61,5 +65,12 @@ describe('Shopping Cart redux state tests', () => {
 
     const state = store.getState().shoppingCart;
     expect(state.products).toHaveLength(1);
+  });
+
+  it('should back to an empty list when remove all products', () => {
+    store.dispatch(removeAllProducts());
+
+    const state = store.getState().shoppingCart;
+    expect(state.products).toHaveLength(0);
   });
 });
