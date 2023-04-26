@@ -8,7 +8,7 @@ Este é um projeto inicial de um aplicativo de venda de postcards desenvolvido e
 <div align="center"><img align="center" src="./docs/wireframe.png" height="400px" /></div>
 <p align="center">Wireframe base</p>
 <div align="center"><img align="center" src="./docs/app.png" height="400px" /></div>
-<p align="center">App printscreens</p>
+<p align="center">Capturas de tela do app</p>
 
 ## Como Rodar o Projeto
 
