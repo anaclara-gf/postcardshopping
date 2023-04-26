@@ -2,11 +2,11 @@ import React from 'react';
 import {
   ActivityIndicator,
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   Text,
   Pressable,
   View,
+  FlatList,
 } from 'react-native';
 import useProducts from '../../hooks/useProducts';
 import Header from '../../components/Header';
@@ -14,7 +14,7 @@ import ProductTile from '../../components/ProductTile';
 
 function Products(): JSX.Element {
   const {loading, products, error, fetchProducts, pagination} = useProducts();
-  
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <Header
@@ -24,7 +24,7 @@ function Products(): JSX.Element {
       />
 
       {loading ? (
-        <View testID='loadingTestId' style={styles.container}>
+        <View testID="loadingTestId" style={styles.container}>
           <ActivityIndicator color={'black'} size="large" />
         </View>
       ) : error ? (
@@ -37,14 +37,13 @@ function Products(): JSX.Element {
           </Pressable>
         </View>
       ) : (
-        <ScrollView>
-          <View style={styles.productsContainer}>
-            {products.map(product => (
-                <ProductTile key={product.id} product={product} />
-              )
-            )}
-          </View>
-        </ScrollView>
+        <FlatList
+          initialNumToRender={10}
+          numColumns={2}
+          style={styles.productsContainer}
+          data={products}
+          renderItem={({item}) => <ProductTile key={item.id} product={item} />}
+        />
       )}
     </SafeAreaView>
   );
@@ -78,8 +77,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   productsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flex: 1,
   },
 });
 
