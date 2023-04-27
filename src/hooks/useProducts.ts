@@ -6,7 +6,6 @@ export default function useProducts() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<boolean>(false);
   const [products, setProducts] = useState<Product[]>([]);
-  const [pagination, setPagination] = useState<Pagination>();
   const baseUrl = 'https://api.artic.edu/api/v1/artworks';
   const fields =
     'id,title,date_display,place_of_origin,dimensions,medium_display,artwork_type_title,artist_title,style_title,image_id,artist_display';
@@ -25,7 +24,6 @@ export default function useProducts() {
             };
           });
         setProducts(productsWithImages);
-        setPagination(response.data.pagination);
         setLoading(false);
       })
       .catch(() => {
@@ -38,5 +36,5 @@ export default function useProducts() {
     fetchProducts();
   }, []);
 
-  return {loading, products, pagination, error, fetchProducts};
+  return {loading, products, error, fetchProducts};
 }

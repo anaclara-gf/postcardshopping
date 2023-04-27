@@ -13,7 +13,7 @@ import Header from '../../components/Header';
 import ProductTile from '../../components/ProductTile';
 
 function Products(): JSX.Element {
-  const {loading, products, error, fetchProducts, pagination} = useProducts();
+  const {loading, products, error, fetchProducts} = useProducts();
 
   return (
     <SafeAreaView style={{flex: 1}}>
