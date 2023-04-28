@@ -41,8 +41,11 @@ function ProductDetail(): JSX.Element {
   return (
     <>
       <Header backButton={true} closeButton={false} shoppingCartButton={true} />
-      <ScrollView contentContainerStyle={styles.container}>
-        <Pressable testID="imageTestId" onPress={toggleOverlay}>
+      <View style={styles.container}>
+        <Pressable
+          style={styles.imageContainer}
+          testID="imageTestId"
+          onPress={toggleOverlay}>
           <Image
             style={styles.image}
             source={{
@@ -51,28 +54,34 @@ function ProductDetail(): JSX.Element {
           />
         </Pressable>
         <View style={styles.detailsContainer}>
-          <View style={styles.titleContainer}>
+          <View>
             <Text style={styles.title}>{product.title}</Text>
             <Text style={styles.subtitle}>{product.artist_title}</Text>
           </View>
-          <View style={styles.priceContainer}>
-            <Text style={styles.price}>R$15,00</Text>
-            {productQuantity.length ? (
-              <InputSpinner
-                product={product}
-                icon={{size: 25, color: 'white'}}
-                quantity={productQuantity[0].quantity}
-              />
-            ) : (
-              <Pressable
-                style={styles.button}
-                onPress={() => dispatch(addProduct(product))}>
-                <Text style={styles.buttonText}>Comprar</Text>
-              </Pressable>
-            )}
+          <View>
+            <Text style={styles.details}>A6 (10,5 x 14,8 cm),</Text>
+            <Text style={styles.details}>
+              couché 300g (acabamento brilhante)
+            </Text>
           </View>
         </View>
-      </ScrollView>
+        <View style={styles.priceContainer}>
+          <Text style={styles.price}>R$15,00</Text>
+          {productQuantity.length ? (
+            <InputSpinner
+              product={product}
+              icon={{size: 25, color: 'white'}}
+              quantity={productQuantity[0].quantity}
+            />
+          ) : (
+            <Pressable
+              style={styles.button}
+              onPress={() => dispatch(addProduct(product))}>
+              <Text style={styles.buttonText}>Comprar</Text>
+            </Pressable>
+          )}
+        </View>
+      </View>
       <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
         <Image
           testID="overlayImageTestId"
@@ -92,14 +101,16 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 15,
   },
+  imageContainer: {
+    height: '60%',
+  },
   image: {
-    height: 400,
+    height: '100%',
   },
   detailsContainer: {
     flex: 1,
-  },
-  titleContainer: {
-    flex: 1,
+    justifyContent: 'space-between',
+    paddingBottom: 20,
   },
   title: {
     marginTop: 10,
@@ -111,6 +122,11 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 18,
     fontStyle: 'italic',
+    marginBottom: 10,
+  },
+  details: {
+    color: 'black',
+    fontSize: 14,
   },
   priceContainer: {
     height: 50,
