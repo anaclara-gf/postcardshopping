@@ -61,6 +61,8 @@ Foi utilizado o Redux em vez da Context API para permitir uma maior escalabilida
 
 Foram feitos testes de componentes com Jest (configurado junto com a inicialização do projeto) e [Testing Library](https://testing-library.com/). Para executar os testes, basta executar o comando `npm test`.
 
+Já os testes e2e foram configurados com Detox, ainda sem cobertura de todos os fluxos. Para rodar os testes e2e, basta instalar o detox-cli com `npm install detox-cli --global`, iniciar o projeto com `npx react-native start` buildar o projeto para testes com `detox build -c android` e rodar os testes com `detox test -c android`. Para maiores informações, acessar a [documentação do Detox](https://wix.github.io/Detox/docs/19.x/introduction/getting-started).
+
 ## Considerações Finais
 
 O projeto foi iniciado com React Native CLI para que no futuro seja mais fácil integrar módulos nativos Android e iOS. O objetivo é fornecer uma base sólida e escalável para um aplicativo de venda de postcards que pode ser facilmente modificado e expandido.
