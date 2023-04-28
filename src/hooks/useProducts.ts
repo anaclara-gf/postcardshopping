@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {useEffect, useState} from 'react';
-import {ApiResponse, Pagination, Product} from '../utils/types/Product';
+import {ApiResponse, Product} from '../utils/types/Product';
 
 export default function useProducts() {
   const [loading, setLoading] = useState(true);

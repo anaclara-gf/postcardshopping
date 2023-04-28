@@ -38,6 +38,7 @@ function Products(): JSX.Element {
         </View>
       ) : (
         <FlatList
+          testID="productsListTestID"
           initialNumToRender={10}
           numColumns={2}
           style={styles.productsContainer}
